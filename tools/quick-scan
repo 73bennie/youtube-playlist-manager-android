@@ -1,0 +1,19 @@
+  DB_FULL_PATH="$HOME/.pldl/metadata.db"
+
+  found=$(sqlite3 "$DBFILE" "
+      SELECT 1
+      FROM tracks
+      WHERE artist IS NOT NULL AND album IS NOT NULL
+      GROUP BY playlist_id
+      HAVING COUNT(DISTINCT artist) > 1 OR COUNT(DISTINCT album) > 1
+      LIMIT 1;
+  ")
+
+  # Highlight normalization line in red if inconsistencies found
+  if [[ "$found" == "1" ]]; then
+    echo "Found problem"
+  else
+    echo "Nothing found"
+  fi
+
+
