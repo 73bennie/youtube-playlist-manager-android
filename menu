@@ -48,23 +48,23 @@ while true; do
 
   # Highlight normalization line in red if inconsistencies found
   if [[ "$found" == "1" ]]; then
-    normalize_line="${RED}2) Normalize playlist artist/album metadata (inconsistencies found)${RESET}"
+    normalize_line="${RED}2) Normalize playlist metadata (inconsistencies found)${RESET}"
   else
-    normalize_line="${GREEN}2)${RESET} Normalize playlist artist/album metadata"
+    normalize_line="${GREEN}2)${RESET} Normalize playlist metadata"
   fi
 
   # Highlight option 3 in green if tracks are available for download
   if [[ "$downloadable_playlists" -gt 0 ]]; then
-    download_line="${GREEN}3) Download tracks with metadata tagging (${downloadable_playlists} playlist(s) ready)${RESET}"
+    download_line="${GREEN}3) Download playlists (${downloadable_playlists} playlist(s) ready)${RESET}"
   else
-    download_line="${GREEN}3)${RESET} Download tracks with metadata tagging"
+    download_line="${GREEN}3)${RESET} Download playlists"
   fi
 
   # Highlight option 4 in green if playlists are available for fetch and download
   if [[ "$playlist_count" -gt 0 ]]; then
-    fetch_download_line="${GREEN}4) Fetch and Download (${playlist_count} playlist(s) ready)${RESET}"
+    fetch_download_line="${GREEN}4) Import and Download (${playlist_count} playlist(s) ready)${RESET}"
   else
-    fetch_download_line="${GREEN}4)${RESET} Fetch and Download"
+    fetch_download_line="${GREEN}4)${RESET} Import and Download"
   fi
 
   echo -e "${CYAN}=== YouTube Music Playlist Manager ===${RESET}"
@@ -100,7 +100,7 @@ while true; do
 
     3)
       clear
-      echo -e "${CYAN}=== Download Tracks ===${RESET}"
+      echo -e "${CYAN}=== Download Playlists ===${RESET}"
       echo
       ./download.sh
       echo
@@ -110,7 +110,7 @@ while true; do
 
     4)
       clear
-      echo -e "${CYAN}=== Fetch and Download ===${RESET}"
+      echo -e "${CYAN}=== Import and Download ===${RESET}"
       echo
       
       if [[ "$playlist_count" -eq 0 ]]; then
