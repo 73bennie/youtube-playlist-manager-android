@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS tracks (
     artist TEXT NOT NULL,
     album TEXT NOT NULL,
     thumbnail_url TEXT,
+    playlist_description TEXT,
     downloaded INTEGER DEFAULT 0,
     tagged INTEGER DEFAULT 0
 );
@@ -66,6 +67,12 @@ get_playlist_track_count() {
 get_playlist_first_track() {
     local playlist_id="$1"
     sqlite3 "$DB" "SELECT id FROM tracks WHERE playlist_id = '$(sqlite_escape "$playlist_id")' LIMIT 1;"
+}
+
+# Get playlist description for a playlist
+get_playlist_description() {
+    local playlist_id="$1"
+    sqlite3 "$DB" "SELECT playlist_description FROM tracks WHERE playlist_id = '$(sqlite_escape "$playlist_id")' LIMIT 1;"
 }
 
 # Sanitize database entries (remove forbidden characters)

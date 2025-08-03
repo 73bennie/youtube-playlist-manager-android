@@ -12,6 +12,7 @@ source "lib/sqlite_escape.sh"
     local artist="$3"
     local album="$4"
     local track_id="$5"
+    local playlist_description="$6"
     local tmpfile
     tmpfile="$(mktemp --suffix=".opus")"
 
@@ -31,6 +32,7 @@ source "lib/sqlite_escape.sh"
         -metadata track="$track_number" \
         -metadata track_id="$track_id" \
         -metadata playlist_id="$playlist_id" \
+        -metadata playlist_description="$playlist_description" \
         "$tmpfile"
 
     if [[ -s "$tmpfile" ]]; then
@@ -137,6 +139,9 @@ $album"
         fi
     fi
 
+    # Get playlist description for tagging
+    playlist_description=$(get_playlist_description "$playlist_id")
+    
     sqlite3 -separator '|' "$DB" "
       SELECT track_number, title, id
       FROM tracks
@@ -166,7 +171,7 @@ $album"
 
         # Check if file was actually downloaded and has content
         if [[ -s "$filename" ]]; then
-            tag_opus_file "$filename" "$title" "$artist" "$album" "$vid"
+            tag_opus_file "$filename" "$title" "$artist" "$album" "$vid" "$playlist_description"
             sqlite3 "$DB" "UPDATE tracks SET downloaded = 1 WHERE id = '$(sqlite_escape "$vid")';"
         else
             # Remove empty file if it exists

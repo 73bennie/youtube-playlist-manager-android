@@ -180,9 +180,10 @@ insert_track() {
     local artist="$5"
     local album="$6"
     local thumbnail_url="$7"
+    local playlist_description="$8"
 
     if ! sqlite3 "$DB_FILE" << EOF
-INSERT OR REPLACE INTO tracks (id, playlist_id, track_number, title, artist, album, thumbnail_url)
+INSERT OR REPLACE INTO tracks (id, playlist_id, track_number, title, artist, album, thumbnail_url, playlist_description)
 VALUES (
     '$(sqlite_escape "$track_id")',
     '$(sqlite_escape "$playlist_id")',
@@ -190,7 +191,8 @@ VALUES (
     '$(sqlite_escape "$title")',
     '$(sqlite_escape "$artist")',
     '$(sqlite_escape "$album")',
-    '$(sqlite_escape "$thumbnail_url")'
+    '$(sqlite_escape "$thumbnail_url")',
+    '$(sqlite_escape "$playlist_description")'
 );
 EOF
     then
@@ -212,6 +214,7 @@ process_track() {
     local track_number="$3"
     local index_display="$4"
     local total_tracks="$5"
+    local playlist_description="$6"
     
 if track_exists "$track_id"; then
     local existing_title
@@ -229,7 +232,7 @@ thumbnail_url=$(extract_json_field "$metadata" "thumbnail" "")
 
 echo -e "${GREEN}[$index_display/$total_tracks] ${RESET}$title"
 
-insert_track "$track_id" "$playlist_id" "$track_number" "$title" "$artist" "$album" "$thumbnail_url" || {
+insert_track "$track_id" "$playlist_id" "$track_number" "$title" "$artist" "$album" "$thumbnail_url" "$playlist_description" || {
     log_error "Failed to insert track: $track_id"
     return 1
 }
@@ -239,7 +242,7 @@ insert_track "$track_id" "$playlist_id" "$track_number" "$title" "$artist" "$alb
 # Process entire playlist
 process_playlist() {
     local input="$1"
-    local url playlist_id playlist_metadata playlist_title
+    local url playlist_id playlist_metadata playlist_title playlist_description
     local -a track_ids
     local total_tracks new_count
     
@@ -254,8 +257,9 @@ process_playlist() {
     # Fetch playlist metadata
     playlist_metadata=$(fetch_playlist_metadata "$url") || return 1
     
-    # Extract playlist title
+    # Extract playlist title and description
     playlist_title=$(extract_json_field "$playlist_metadata" "title" "$DEFAULT_PLAYLIST_TITLE")
+    playlist_description=$(extract_json_field "$playlist_metadata" "description" "")
     #log_info "Validating playlist: \"$playlist_title\""
     log_info "$YELLOW"  "$playlist_title"
     
@@ -279,7 +283,7 @@ process_playlist() {
         
         printf -v index_display "$TRACK_NUMBER_FORMAT" "$track_number"
         
-        process_track "$track_id" "$playlist_id" "$track_number" "$index_display" "$total_tracks" || {
+        process_track "$track_id" "$playlist_id" "$track_number" "$index_display" "$total_tracks" "$playlist_description" || {
             log_error "Failed to process track $track_number: $track_id"
             continue
         }
