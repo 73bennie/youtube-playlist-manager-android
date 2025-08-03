@@ -53,27 +53,6 @@ while true; do
     normalize_line="${GREEN}2)${RESET} Normalize playlist artist/album metadata"
   fi
 
-  # Check for database operations available
-  db_operations=0
-  if [[ -f "$DB_FULL_PATH" ]]; then
-    # Count albums available for reset
-    album_count=$(sqlite3 "$DB" "
-      SELECT COUNT(DISTINCT artist || '|' || album)
-      FROM tracks
-      WHERE artist IS NOT NULL AND TRIM(artist) != ''
-        AND album IS NOT NULL AND TRIM(album) != ''
-        AND LENGTH(artist) > 1
-        AND LENGTH(album) > 1
-    " 2>/dev/null || echo "0")
-    db_operations=$((db_operations + album_count))
-  fi
-  
-  # Count available backups
-  if [[ -d "backups" ]]; then
-    backup_count=$(ls backups/*.db 2>/dev/null | wc -l)
-    db_operations=$((db_operations + backup_count))
-  fi
-
   # Highlight option 3 in green if tracks are available for download
   if [[ "$downloadable_playlists" -gt 0 ]]; then
     download_line="${GREEN}3) Download tracks with metadata tagging (${downloadable_playlists} playlist(s) ready)${RESET}"
@@ -88,19 +67,12 @@ while true; do
     fetch_download_line="${GREEN}4)${RESET} Fetch and Download"
   fi
 
-  # Highlight option 5 in green if database operations are available
-  if [[ "$db_operations" -gt 0 ]]; then
-    db_line="${GREEN}5) Database Functions (${db_operations} operation(s) available)${RESET}"
-  else
-    db_line="${GREEN}5)${RESET} Database Functions"
-  fi
-
   echo -e "${CYAN}=== YouTube Music Playlist Manager ===${RESET}"
   echo -e "$fetch_line"
   echo -e "$normalize_line"
   echo -e "$download_line"
   echo -e "$fetch_download_line"
-  echo -e "$db_line"
+  echo -e "${GREEN}5)${RESET} Database Functions"
   echo -e "${GREEN}0)${RESET} Exit"
   echo
   read -p "Choose an option: " option
