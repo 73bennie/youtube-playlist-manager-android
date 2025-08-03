@@ -92,13 +92,38 @@ ytplm/
 - **Last Commit**: Enhanced menu system with smart highlighting
 - **Status**: All changes tracked and documented
 
+## 🆕 **Latest Features Added**
+
+### **Playlist Description Feature**
+- **Database Schema**: Added `playlist_description TEXT` column
+- **Metadata Extraction**: Extracts descriptions from YouTube Music playlists
+- **Metadata Embedding**: Embeds descriptions in track metadata
+- **Note**: New databases will have the column automatically; existing users need manual migration
+
+### **Updated Menu Options**
+- **Option 1**: "Import playlist metadata" (renamed from "Fetch and update")
+- **Option 2**: "Normalize playlist metadata" (simplified)
+- **Option 3**: "Download playlists" (simplified)
+- **Option 4**: "Import and Download" (renamed from "Fetch and Download")
+- **Option 5**: "Database Functions" (removed smart highlighting)
+
 ## 📋 **Next Session Tasks**
-- [ ] Test the enhanced normalize workflow
-- [ ] Add more utility tools
-- [ ] Enhance error reporting
-- [ ] Add batch operations
-- [ ] Improve documentation
+- [x] Test the enhanced normalize workflow
+- [x] Add playlist description feature
+- [x] Update menu text and organization
+- [ ] Add database migration tools for existing users
+- [ ] Add batch operations for multiple playlists
+- [ ] Enhance error reporting and logging
+- [ ] Add configuration options for download quality
+- [ ] Create backup/restore for playlist descriptions
+- [ ] Add playlist description viewer in database functions
+
+## 🔄 **Git Status**
+- **Repository**: All changes committed and pushed
+- **Current Branch**: main
+- **Latest Features**: Playlist descriptions, menu improvements
+- **Status**: Ready for production use
 
 ---
 
-**Session Notes**: All enhancements committed to Git with comprehensive documentation 
+**Session Notes**: Enhanced with playlist descriptions and improved menu system 
