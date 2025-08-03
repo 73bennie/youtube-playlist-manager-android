@@ -27,9 +27,9 @@ while true; do
 
   # Highlight option 1 in green if playlists are available
   if [[ "$playlist_count" -gt 0 ]]; then
-    fetch_line="${GREEN}1) Fetch and update playlist metadata (${playlist_count} playlist(s) ready)${RESET}"
+    fetch_line="${GREEN}1) Import playlist metadata (${playlist_count} playlist(s) ready)${RESET}"
   else
-    fetch_line="${GREEN}1)${RESET} Fetch and update playlist metadata"
+    fetch_line="${GREEN}1)${RESET} Import playlist metadata"
   fi
 
   # Check for playlists available for download
@@ -80,7 +80,7 @@ while true; do
   case "$option" in
     1)
       clear
-      echo -e "${CYAN}=== Fetch and Update Playlist Metadata ===${RESET}"
+      echo -e "${CYAN}=== Import Playlist Metadata ===${RESET}"
       echo
       
       if [[ "$playlist_count" -eq 0 ]]; then
