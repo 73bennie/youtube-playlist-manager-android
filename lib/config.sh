@@ -6,7 +6,7 @@ EXIT_DB_ERROR=3
 
 DB="${DB_FULL_PATH}"
 # Use Windows-compatible download directory
-DOWNLOAD_DIR="$HOME/Music"
+DOWNLOAD_DIR="$HOME/storage/shared/Music"
 
 # Color codes
 RED="\e[31m"
@@ -20,6 +20,7 @@ readonly SCRIPT_NAME="$(basename "$0")"
 readonly BASE_DIR="./ytdata"
 readonly LOG_FILE="$BASE_DIR/logfile"
 readonly DB_FILE="$BASE_DIR/metadata.db"
+readonly PLAYLIST_FILE="$BASE_DIR/plist.txt"
 readonly TRACK_NUMBER_FORMAT="%02d"
 readonly DEFAULT_PLAYLIST_TITLE="Untitled Playlist"
 readonly DEFAULT_TRACK_TITLE="Untitled Track"

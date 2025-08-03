@@ -65,9 +65,9 @@ else
 fi
 
 # Create sample plist.txt
-if [[ ! -f "ytdata/plist.txt" ]]; then
+if [[ ! -f "$PLAYLIST_FILE" ]]; then
     echo "Creating sample plist.txt..."
-    cat > "ytdata/plist.txt" << 'EOF'
+    cat > "$PLAYLIST_FILE" << 'EOF'
 # YouTube Playlist Manager - Playlist URLs
 # Add your YouTube Music playlist URLs or IDs here
 # Examples:
@@ -88,7 +88,7 @@ echo
 echo -e "${GREEN}=== Installation Complete! ===${RESET}"
 echo
 echo -e "${CYAN}Next steps:${RESET}"
-echo "1. Edit ytdata/plist.txt and add your playlist URLs"
+echo "1. Edit $PLAYLIST_FILE and add your playlist URLs"
 echo "2. Run: ./menu"
 echo "3. Choose option 1 to fetch metadata"
 echo "4. Choose option 3 to download tracks"

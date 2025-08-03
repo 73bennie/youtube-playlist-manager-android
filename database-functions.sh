@@ -14,7 +14,8 @@ while true; do
     echo -e "${GREEN}5)${RESET} Edit plist.txt"
     echo -e "${GREEN}6)${RESET} Clean Database"
     echo -e "${GREEN}7)${RESET} Show Database Statistics"
-    echo -e "${GREEN}8)${RESET} Batch Operations"
+    echo -e "${GREEN}8)${RESET} Show album/track metadata"
+    echo -e "${GREEN}9)${RESET} Reset Album"
     echo -e "${GREEN}0)${RESET} Return to Main Menu"
     echo
     read -p "Choose an option: " option
@@ -64,10 +65,17 @@ while true; do
             ;;
         8)
             clear
-            echo -e "${CYAN}=== Batch Operations ===${RESET}"
+            echo -e "${CYAN}=== Show Album/Track Metadata ===${RESET}"
             echo
-            echo "Batch operations coming soon..."
-            echo "This will allow operations on multiple albums at once."
+            ./scan-metadata.sh
+            echo
+            read -rp "Press Enter to continue..."
+            ;;
+        9)
+            clear
+            echo -e "${CYAN}=== Reset Album ===${RESET}"
+            echo
+            ./reset-album.sh
             ;;
         "")
             break
@@ -76,7 +84,7 @@ while true; do
             break
             ;;
         *)
-            echo -e "${RED}Invalid option. Please choose between 0 and 8, or press Enter to return.${RESET}"
+            echo -e "${RED}Invalid option. Please choose between 0 and 9, or press Enter to return.${RESET}"
             sleep 1
             ;;
     esac

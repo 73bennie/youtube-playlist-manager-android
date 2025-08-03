@@ -48,7 +48,7 @@ The installation script will:
 ## 🎯 Quick Start
 
 ### 1. Add Your Playlists
-Edit `ytdata/plist.txt` and add your YouTube Music playlist URLs or IDs:
+Edit `$PLAYLIST_FILE` and add your YouTube Music playlist URLs or IDs:
 ```
 # Examples:
 https://music.youtube.com/playlist?list=OLAK5uy_...

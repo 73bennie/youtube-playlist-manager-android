@@ -214,8 +214,8 @@ backup_plist() {
     
     mkdir -p "$backup_dir"
     
-    if [[ -f "ytdata/plist.txt" ]]; then
-        if cp "ytdata/plist.txt" "$backup_file"; then
+    if [[ -f "$PLAYLIST_FILE" ]]; then
+        if cp "$PLAYLIST_FILE" "$backup_file"; then
             echo -e "${GREEN}✓ plist.txt backed up to: $backup_file${RESET}"
         else
             echo -e "${RED}✗ Failed to backup plist.txt${RESET}"
@@ -274,7 +274,7 @@ restore_plist() {
                 read -r confirm
                 
                 if [[ "$confirm" =~ ^[Yy]$ ]]; then
-                    if cp "$selected_backup" "ytdata/plist.txt"; then
+                    if cp "$selected_backup" "$PLAYLIST_FILE"; then
                         echo -e "${GREEN}✓ plist.txt restored from: $selected_backup${RESET}"
                     else
                         echo -e "${RED}✗ Failed to restore plist.txt${RESET}"
@@ -483,7 +483,7 @@ tag_opus_file() {
 }
 
 edit_plist() {
-    local plist_file="ytdata/plist.txt"
+    local plist_file="$PLAYLIST_FILE"
     
     if [[ ! -f "$plist_file" ]]; then
         echo -e "${RED}plist.txt not found${RESET}"
@@ -566,7 +566,7 @@ unix_to_win_path() {
 # Main function for get-metadata.sh
 get_metadata_main() {
     local url url_file
-    url_file="ytdata/plist.txt"
+    url_file="$PLAYLIST_FILE"
     # Initialize environment
     echo ""
     initialize_environment
