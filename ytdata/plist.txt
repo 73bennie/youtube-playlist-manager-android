@@ -3,6 +3,3 @@
 # Examples:
 # https://music.youtube.com/playlist?list=OLAK5uy_...
 # OLAK5uy_... (just the playlist ID)
-
-# Sample playlist for testing
-https://music.youtube.com/playlist?list=OLAK5uy_nJQZFE0s-6QjCjjZ3kHz_hCLX5Oj-_Q
