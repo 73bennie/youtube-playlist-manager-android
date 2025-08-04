@@ -44,6 +44,31 @@ source "lib/sqlite_escape.sh"
     fi
 }
 
+# Parse arguments
+AUTO_ALL=0
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -a|--all)
+      AUTO_ALL=1
+      shift
+      ;;
+    # ...other argument parsing if any...
+    *)
+      shift
+      ;;
+  esac
+done
+
+if [[ "$AUTO_ALL" -eq 1 ]]; then
+  # Automatically select all available playlists for download
+  playlists_to_download=$(sqlite3 "$DB" "SELECT DISTINCT playlist_id FROM tracks WHERE artist IS NOT NULL AND TRIM(artist) != '' AND album IS NOT NULL AND TRIM(album) != '' GROUP BY playlist_id HAVING SUM(CASE WHEN downloaded = 0 THEN 1 ELSE 0 END) > 0 AND COUNT(DISTINCT artist || '|' || album) = 1;")
+  for playlist_id in $playlists_to_download; do
+    # Replace this with your actual download logic for each playlist
+    ./download-playlist.sh "$playlist_id"
+  done
+  exit 0
+fi
+
 playlists=$(sqlite3 -separator '|' "$DB" "
   SELECT playlist_id, artist, album,
          COUNT(*) AS total_tracks,
